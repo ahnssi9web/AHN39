@@ -1,0 +1,102 @@
+class bold_color:
+   PURPLE = '\033[95m'
+   CYAN = '\033[96m'
+   DARKCYAN = '\033[36m'
+   BLUE = '\033[94m'
+   GREEN = '\033[92m'
+   YELLOW = '\033[93m'
+   RED = '\033[91m'
+   BOLD = '\033[1m'
+   UNDERLINE = '\033[4m'
+   END = '\033[0m'
+
+print("The output is:" + color.BOLD + 'Python Programming !' + color.BLUE)
+
+
+class bcolors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKCYAN = '\033[96m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+
+print(bcolors.WARNING + "Warning: No active frommets remain. Continue?" + bcolors.ENDC)
+
+
+print('\033[31m \033[43m'+ '글자와 배경 변경' + '\033[0m') 
+
+temperature = 202
+measure = 'Fahrenheit'
+print('Water boils at %d degrees %s' % (temperature, measure))     # 1
+print('Water boils at {} degrees {}'.format(temperature, measure)) # 2
+print(f'Water boils at {temperature} degrees {measure}') 
+
+
+# 10칸 오른쪽 배열 앞6개 공백
+string = 'test'
+print('%10s' % (string))
+print('{:>10}'.format(string))
+print(f'{string:>10}')
+
+#왼쪽 정렬
+string = 'test1'
+print('%-10s' % (string))
+print('{:<10}'.format(string))
+print(f'{string:<10}')
+
+string = 'test2'
+print('%-10s' % (string))
+print('{:10}'.format(string))
+print(f'{string:10}')
+
+# 공백을 특정문자로 채우기  여긴 *
+string = 'test'
+print('{:*>10}'.format('test'))
+print(f'{string:*>10}')
+
+print('{:*<10}'.format('test'))
+print(f'{string:*<10}')
+
+# 가운데 정렬
+string = 'test'
+print('{:^10}'.format('test'))
+print(f'{string:^10}')
+
+print('{:*^10}'.format('test'))
+print(f'{string:*^10}')
+
+# 문자열 5개로 자르기
+string = 'xylophone'
+print('%-.5s' % (string))
+print('{:.5}'.format(string))
+print(f'{string:.5}')
+
+# 숫자 float 소수 6자리
+number = 3.141592653589793
+print('%f' % (number))
+print('{:f}'.format(number))
+print(f'{number:f}'.format(number))
+
+print(f'{number}')
+
+# 소수 2자리
+number = 3.141592653589793
+print('%.2f' % (number))
+print('{:.2f}'.format(number))
+print(f'{number:.2f}')
+
+# 날짜 시간
+from datetime import datetime
+print('{:%Y-%m-%d %H:%M}'.format(datetime(2001, 2, 3, 4, 5)))
+
+date = datetime(2001, 2, 3, 4, 5)
+print(f"{date:%Y-%m-%d %H:%M}")
+
+from datetime import datetime
+dt = datetime(2001, 2, 3, 4, 5)
+print('{:{dfmt} {tfmt}}'.format(dt, dfmt='%Y-%m-%d', tfmt='%H:%M'))
+print(f'{dt:{"%Y-%m-%d"} {"%H:%M"}}')

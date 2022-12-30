@@ -1,0 +1,213 @@
+import requests
+
+def setUp(self):
+    config = configparser.ConfigParser()
+    config.read('conf/config.ini')
+    client_id = config['KORBIT']['client_id']
+    client_secret = config['KORBIT']['client_secret']
+    user_name = config['KORBIT']['user_name']
+    password = config['KORBIT']['password']
+    self.korbit_machine = KorbitMachine(mode="Prod", client_id=client_id,
+                                        client_secret=client_secret,
+                                        user_name=user_name,
+                                        password=password)
+    token = self.korbit_machine.set_token()
+
+def run():
+     setUp()
+     print("---aaa---")
+     print(user_name)
+     return()
+
+if __name__ == "__main__":
+    run()
+
+=======================================
+from urllib import request, parse
+import json
+url = 'https://api.korbit.co.kr/v1/transactions'
+
+
+# GET
+req = request.Request(url)
+res = request.urlopen(req)
+print(str(res.status) + " | " + res.read().decode('utf-8'))
+
+# POST (JSON)
+headers = {'Content-Type': 'application/json; charset=utf-8'}
+data = {'title': 'dummy title', 'id': 1, 'message': 'hello world!'}
+req = request.Request(url=url, headers=headers, data=json.dumps(data).encode('utf-8'))
+res = request.urlopen(req)
+print(str(res.status) + " | " + res.read().decode('utf-8'))
+
+=======================================
+import requests
+import json
+url = 'https://api.korbit.co.kr/v1/transactions'
+
+
+
+# GET
+res = requests.get(url)
+print(str(res.status_code) + " | " + res.text)
+
+# POST (JSON)
+headers = {'Content-Type': 'application/json; charset=utf-8'}
+data = {'title': 'dummy title', 'id': 1, 'message': 'hello world!'}
+res = requests.post(url=url, data=json.dumps(data), headers=headers)
+print(str(res.status_code) + " | " + res.text)
+
+====================================
+
+import requests
+
+url = 'https://api.korbit.co.kr/v1/transactions'
+req = requests.get(url)
+
+print(req.status_code)
+print(req.headers)
+print(req.text)
+=================================
+import requests
+
+url = 'curl -D - -X POST -d "client_id=MnzKEqKaRBQk8igLYY92ieZzXR1TNjRIVjz3qMlGtPSyeTW8v4WBL9ADuwkHZ&client_secret=DVNsd2FvHhbR9hd9HSDio4yj5jLEFwSm94DCtAUBZmmTDMZei2mi9vJcJyA6y&grant_type=client_credentials" https://api.korbit.co.kr/v1/oauth2/access_token'
+req = requests.post(url)
+
+print(req.status_code)
+print(req.headers)
+print(req.text)
+=============================
+import requests
+url = 'https://api.korbit.co.kr/v1/transactions'
+req = requests.get(url)
+
+print(req.status_code)
+print(req.headers)
+print(req.text)
+
+print("---1----")
+data = {"client_id":  "MnzKEqKaRBQk8igLYY92ieZzXR1TNjRIVjz3qMlGtPSyeTW8v4WBL9ADuwkHZ",
+          "client_secret":  "DVNsd2FvHhbR9hd9HSDio4yj5jLEFwSm94DCtAUBZmmTDMZei2mi9vJcJyA6y",
+          "grant_type": "client_credentials"
+	    }
+print("---data ----")
+res = requests.post("http://api.korbit.co.kr/v1/oauth2/access_token", data)
+print("---res----")
+print(res)
+==========================
+import requests
+response = requests.get("http://placegoat.com/200/200")
+response
+response.headers.get("Content-Type")
+file = open("goat.jpeg", "wb")
+file.write(response.content)
+file.close()
+
+=======================================
+class Person:
+    def __init__(self, name):
+        self.name = name
+    def __repr__(self):
+        return (f"Name : {self.name} | ")
+print(*map(Person, ["sangkoo", "Ahn"]))
+
+
+m1 = map(int, [1,2,3])
+m2 = map(lambda x: x+1, m1)
+m3 = map(lambda x: x+2, m2)
+print(*m3)
+
+
+plus_two = lambda x: x+2
+for i in map(plus_two, [1,2,3]):
+    print(i)
+for i in map(lambda x: x+3, [10,11,12]):
+    print(i)
+
+def plus_one(x):
+    return x+1
+for i in map(plus_one, [1,2,3]):
+    print(i)
+
+a, b, c = map(int, [1, 2, 3])
+print(a, b, c)
+print(*map(int, [1, 2, 3]))
+
+============================
+import urllib, requests
+import json
+
+client_key = 'CsODwdUTyG9vOI1uIeIf'
+client_secret ='YmIx0GW8JG'
+
+encText = urllib.parse.quote_plus("스마트폰")
+print(encText)
+
+naver_url = 'https://openapi.naver.com/v1/search/news.json?query=' + encText
+
+request = urllib.request.Request(naver_url)
+request.add_header("X-Naver_Client-Id", 'CsODwdUTyG9vOI1uIeIf')
+request.add_header("X-Naver_Client-Secret", 'YmIx0GW8JG')
+
+response = urllib.request.urlopen(request)
+
+rescode = response.getcode()
+
+if(rescode  == 200):
+    response_body = response.read()
+    data = json.loads(response_body)
+    print(data['items'][0]['title'])
+    print(data['items'][0]['description'])
+else:
+    print("error code :" + rescode)
+==================================
+import requests
+import datetime
+from time import sleep
+import csv
+import os.path
+
+v = os.path.isfile("C:/Users/ahnss/Desktop/btc01.csv")
+if v == False:
+    f = open("C:/Users/ahnss/Desktop/btc01.csv", mode="w", encoding="cp949", newline='')
+    writer = csv.writer(f)
+    writer.writerow(['nowDatetime','opening_price','closing_price','min_price','max_price','market'])
+    f.close()
+else:
+    f = open('C:/Users/ahnss/Desktop/btc01.csv', 'r')
+    rdr = csv.reader(f)
+    for line in rdr:
+            print(line)
+    f.close()
+
+
+while 1:
+        sleep(60)
+        btc = requests.get("https://api.bithumb.com/public/ticker/").json()['data']
+        f = open("C:/Users/ahnss/Desktop/btc01.csv", "a", encoding="cp949", newline='')
+        writer = csv.writer(f)
+
+        #date = btc['date']
+        now = datetime.datetime.now()
+        nowDatetime = now.strftime('%Y-%m-%d %H:%M:%S')
+        #print(nowDatetime)  # 2015-04-19 12:11:32
+
+        opening_price = btc['opening_price']
+        closing_price = btc['closing_price']
+        min_price = btc['min_price']
+        max_price = btc['max_price']
+
+        변동폭 = float(btc['max_price']) - float(btc['min_price'])
+        시가 = float(btc['opening_price'])
+        최고가 = float(btc['max_price'])
+        market = ""
+        if (시가 + 변동폭) > 최고가:
+                market = "상승장"
+        else:
+                market = "하락장"
+
+        print(nowDatetime, opening_price,closing_price,min_price,max_price,market)
+
+        writer.writerow([nowDatetime, opening_price, closing_price, min_price, max_price, market])
+        f.close()
+=========================================

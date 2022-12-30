@@ -1,0 +1,131 @@
+bitnami 디렉토리
+=============================
+c:/Bitnami/wampstack-8.0.7.0/apache2/htdocs
+설정-시스템-정보-고급설정-환경변수-편집
+C:\ahn39\Python39\Scripts\;
+C:\ahn39\Python39\;
+#! c:/ahn39/python39
+#!python
+==================================
+python 용 shebang line 첫 줄에 삽입
+#!/usr/bin/env/python
+#!/usr/bin/python
+#!/usr/local/bin/python
+#!python
+
+
+/usr/local/bin/python3.9 
+#! c:/ahn39/python39
+
+#!/usr/bin/env/python
+#!/C:\Users\Pc\AppData\Local\Programs\Python\Python39
+
+집
+C:\Users\ahnss\AppData\Local\Microsoft\WindowsApps\python.exe
+
+window  --> #!python
+    #!c:/program/python/python3 ?
+
+mac --> #1/usr/local/bin/python3
+
+작동
+python
+python3.9
+py
+
+------------------------------------
+python 설치 위치
+c:>  where python
+#!/C:\Users\pc\AppData\Local\Programs\Python\Python39\python39.exe
+
+import os
+import sys
+
+print(os.path.dirname(sys.executable))
+-------------------------------------------
+conf/httpd.conf에서 수정
+
+	<Directory "${SRVROOT}/cgi-bin">
+	AllowOverride none
+	AddHandler cgi-script .cgi .pl .py
+	Options +ExecCGI
+	Require all granted
+	</Directory>
+============================
+두번째 방법
+<Directory /apache2/htdocs>
+	Options FollowSymLinks
+	AllowOverride All
+	Order allow, deny
+	Allow from all
+	Options +ExecCGI
+	AddHandler cgi-script .py
+</Directory /apache2/htdocs>
+----------------------------------------
+
+<Directory "c:/ahn39/python39">
+  AllowOverride none
+  Require all granted
+  AddHandler cgi-script .cgi .pl .py
+  Options ExecCGI
+ </Directory>
+
+--------------------------------------
+
+cgi 구현하려면 아래 두 줄 추가 
+
+print("Content-Type: text/html")
+print()
+------------------------------------
+apache 폴더에 가보면 cgi-bin폴더가 있는데, 거기에 index.py파일을 작성합니다.
+cgi 폴더에 index.py 작성
+	#!D:\anaconda3\python.exe
+	# 최상단은 python이 설치되어 있는 경로이다.
+	# -*- coding: UTF-8 -*-
+	# 파일의 인코딩 타입이다.
+	import cgi;
+	# cgi는 cgi프로그램에 사용되는 모듈이다.
+	import cgitb;
+	# cgitb는 cgi프로그램 디버깅에 관한 모듈이다. (에러가 발생하면 php처럼 에러를 웹 화면에 표시해 준다.)
+	cgitb.enable();
+	
+	# 파라미터를 취득하기 위한 함수
+	# get,post 구분없이 데이터를 가져온다.
+	form = cgi.FieldStorage();
+	# 파라미터 data를 취득한다.
+	data = form.getvalue('data');
+	# 파라미터 test를 취득한다.
+	test = form.getvalue('test');
+	
+	html = f"""
+	<!DOCTYPE html>
+	<html>
+	<head><title>python</title></head>
+	<body>
+	<form method='post'>
+	<input type='text' name='test' value='hello'>
+	<input type='submit'>
+	</form>
+	<br />
+	data - {data} <br />
+	test - {test} <br />
+	</body>
+	</html>
+	""";
+	
+	print("Content-type:text/html")
+	# http 프로토콜에서 header와 body의 구분은 개행이므로 반드시 넣어야 한다. 없으면 에러난다.(body가 없는 http파일이기 때문에)
+	print('')
+	print(html);
+ 
+
+------------------
+apache2 실행명령
+localhost/cgi-bin/index.py?data=1
+
+------------------------------------
+#!python
+A=3+4+5
+B=A/3
+print("content-type:text/html; charset:utf-8\n")
+print(B)

@@ -1,0 +1,245 @@
+import pandas as pd
+
+df = pd.read_excel("C:/Users/ahnss/Desktop/2017년 광고비 - 삼성전자.xlsx")
+df[::2].to_excel('even.xlsx')
+df[1::2].to_excel('odd_xlsx')
+----------------------------------
+
+
+
+#openPyXL
+
+import openpyxl
+
+wb = openpyxl.load_workbook("C:/Users/ahnss/Desktop/2017년 광고비 - 삼성전자.xlsx")
+sheet = wb.get_sheet_by_name('sheet1')
+sheet
+
+----------------------------------
+
+sheet['A2'].value
+'2017-01'
+
+
+sheet['B1'].value
+'name'
+
+sheet['C1'].value = 43700
+
+sheet.cell(row = 1. column = 3).value 
+43700
+
+------------------------------------
+
+multi_cells = sheet['E2' : 'F14']
+multi_cells
+
+모든 row 살펴보기
+for row in sheet.rows:
+    print([col.value for col in row])
+
+==============================
+
+import pandas as pd
+
+df_삼성전자 = pd.read_excel("C:/Users/ahnss/Desktop/2017년 광고비 - 삼성전자.xlsx")
+df_삼성전자.set_index('date', inplace=True)
+
+
+df_LG전자 = pd.read_excel("C:/Users/ahnss/Desktop/2017년 광고비 - LG전자.xlsx")
+df_LG전자.set_index('date', inplace=True)
+
+df_merge = pd.DataFrame()
+
+df_merge['삼성전자'] = df_삼성전자['magazine']
+df_merge['LG전자'] = df_LG전자['magazine']
+
+df_merge.xlsx 로 저장만 하면 된다.
+=========================================
+
+# 합계 계산
+
+sum_삼성전자 = sum([row[0].value for row in sheet['B2':'B13']])
+sheet['B14'].value = sum_삼성전자
+
+
+sum_LG전자 = sum([row[0].value for row in sheet['B2':'B13']])
+sheet['C14'].value = sum_LG전자
+
+
+--------------------------------------------------
+sheet['B14'].value = '=sum(B2:B13)'
+sheet['C14'].value = '=sum(C2:C13)'
+
+======================================
+
+from openpyxl.styles import Font, Alignment
+from openpyxl.styles import Border, Side, PatternFill
+
+#Font: '맑은 고딕', 크기 15, 굵게
+font_15 = Font(name='맑은 고딕', size=15, bold=True')
+
+#Alignment : 가로 세로, 가운데 정렬
+align_center = Alignment(horizontal='center', vertical='center')
+align_vcenter = Alignment(vertical='center')
+
+# Border:테두리 지정
+border_thin = Border(
+	left=side(style='thin'), roght=Side(style='thin'),
+	top=Side(style='thin'), bottom=Side(style='thin')
+
+#PatternFill : 셀 색상 지원
+fill_orange = Pattern_Fill(patternType='solid', fgColor=Color('FFC000'))
+fill_lightgrey = PatternFill(patternType='solid', fgColor=Color('D3D3D3'))
+
+#합계 제목 셀
+cell_sum = sheet['A14']
+
+cell_sum.font = font_15
+cell_sum.alignment = align_center
+cell_sum.border = border_thin
+cell_sum.fill = fill_orange
+=========================================
+
+챠트 추가 하기
+
+from openpyxl.chart import Reference, Series, BarChart
+
+chart = BarChart()
+chart.Title = '2017년 월별 광고비(억원)'
+
+vals = Reference(sheet, range_string = 'sheet1!B1:B13;)
+series = Series(vals, title='삼성전자')
+chart.append(series)
+
+
+vals = Reference(sheet, range_string = 'sheet1!C1:C13;)
+series = Series(vals, title='LG전자')
+chart.append(series)
+
+sheet.add_chart(chart, 'E1')
+======================================
+
+import pandas as pd
+
+df_팩터 = pd_read_excel('종목별--.xlsx', dftype=['코드',str])
+df_팩터 = df_팩터.set_index('코드')
+df_팩터
+
+
+df_팩터[df_팩터['PER'] <= 10]
+
+
+df = df_팩터[df_팩터['PER'] <= 10].sort_values['배당수익률',ascending=False)
+df
+
+================================
+VLOOKUP
+=VLOOKUP(A2,H2:M$14,3,FALSE)
+
+df_관심종목[['PER','PBR','배당수익률']] = df_팩터[['PER','PBR','배당수익률']]
+df_관심종목
+
+---------------------
+엑셀 파일로 저장
+
+import pandas as pd
+
+writer =pd_ExcelWriter("관심팩터병합.xlsx", engine='openpyxl')
+df_관심종목.to_excel(write.sheet_name='Sheet1')
+
+wb = writer.book
+sheet = writer.sheets["Sheet1"]
+
+#컬럼 너비 지정
+for col in list('BCDE');
+    sheet.column_dimensions[col].width = 14
+
+#테두리 숫자 포맷 지정
+for row in sheet['B2:E5'];
+    for cell in row;
+	cell.border = border_thin
+	cell.number_format = '0.00'
+
+# 헤더 색상 지정
+for row in sheet['A1:E1']
+	for cell in row;
+		cell.fill = fill_lightgrey
+
+writer.save()
+
+================================
+# pivot
+
+import pandas as pd
+
+df =  pd.read_excel('광고비 3사.xlsx', dtype=('종목코드':str))
+table = pd.pivot_table(df, values='total', index='date', column='name')
+table
+
+==================================
+#매주 월요일
+inx = pd.date_range('2021-01-01', '2021-12-31', frq='W-MON')
+
+#매월 말일
+inx = pd.date_range('2021-01-01', '2021-12-31', frq='M')
+
+#매분기 첫 영업일
+inx = pd.date_range('2021-01-01', '2021-12-31', frq='BQS')
+
+#매월 마지막 영업일
+inx = pd.date_range('2021-01-01', '2021-12-31', frq='BM')
+
+df_x = pd.DataFrame(index=inx)
+df_x['종가'] = df_o1('종가']
+df_x.head(10)
+
+---------------------------------------------------------------
+
+홈택스 로그인
+
+from selenium import webdriver
+driver = webdriver.Ie('C:/bin/IEDriverServer.exe')
+
+# 홈택스로 이동 상단 로그인
+driver.get('https://www.hometax.go.kr/')
+driver.find_element_by_id('group1544').click()
+
+#메인 영역
+iframe = driver.find.element_by_id('txppIframe')
+driver.switch_to.frame(iframe)
+
+#로그인 버튼
+driver.find.element_by_id('triggerJ8').click()
+
+#공인인증서 영역
+iframe = driver.find.element_by_id('dscert') ????
+driver.switch_to.frame(iframe)
+
+#공인인증서 선택
+driver.find_element_by_xpath('//*(@title='파이낸스 데이터(20607)0!ㅍ  ???
+
+# 공인인증서 비밀번호 입력
+passwd = '*****"
+driver.find_element_by_id('input_cert_pw').send_keys([passwd)
+driver_find_element_by_id('bts_confirms_iframe').click()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
