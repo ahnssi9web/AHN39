@@ -1,0 +1,238 @@
+https://bcho.tistory.com/1201
+=====================================
+
+import matplotlib.pyplot as plt
+
+plt.plot([1, 2, 3, 4])
+plt.show()
+
+
+import matplotlib.pyplot as plt
+
+plt.plot([1, 2, 3, 4], [1, 4, 9, 16])
+plt.show()
+
+
+import matplotlib.pyplot as plt
+
+plt.plot([1, 2, 3, 4], [1, 4, 9, 16], 'ro')
+plt.axis([0, 6, 0, 20])
+plt.show()
+
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+# 200ms 간격으로 균일하게 샘플된 시간
+t = np.arange(0., 5., 0.2)
+
+# 빨간 대쉬, 파란 사각형, 녹색 삼각형
+plt.plot(t, t, 'r--', t, t**2, 'bs', t, t**3, 'g^')
+plt.show()
+======================================
+
+
+from matplotlib import pyplot as plt
+import numpy as np
+
+x = np.arange(1,10)
+y = x*5
+
+plt.plot(x,y)
+plt.show()
+
+
+from matplotlib import pyplot as plt
+import numpy as np
+
+x = np.arange(1,10)
+y = x*5
+
+plt.plot(x,y,'r')
+plt.show()
+
+
+
+from matplotlib import pyplot as plt
+import numpy as np
+
+x = np.arange(1,10)
+y = x*5
+
+plt.plot(x,y,'or')
+plt.show()
+
+
+from matplotlib import pyplot as plt
+import numpy as np
+
+x = np.arange(1,10)
+y = x*5
+
+plt.plot(x,y)
+plt.xlabel('x axis')
+plt.ylabel('y axis')
+plt.title('matplotlib sample')
+plt.show()
+
+
+
+구간 확대/축소
+그래프는 입력되는 x,y의 최소,최대 구간으로 자동으로 그려지는데, 이 구간을 키우거나 줄이기 위해서 x,y의 구간을 정의할 수 있다. x축은 plt.xlim(최소,최대),  y축은 plt.ylim(최소,최대)로 정의하면 된다.
+
+아래는 x축을 2~3, y축을 5~20으로 확대해서 그래프를 그리는 예제이다.
+
+
+
+from matplotlib import pyplot as plt
+import numpy as np
+
+x = np.arange(1,10)
+y = x*5
+
+plt.xlim(2,3)
+plt.ylim(5,20)
+plt.plot(x,y)
+plt.xlabel('x axis')
+plt.ylabel('y axis')
+plt.title('matplotlib sample')
+plt.show()
+
+레전드
+그래프를 그릴때 여러개의 그래프를 같이 그릴 수 있는데, 이경우 각 그래프가 구분이 안되기 때문에, 그래프마다 라벨을 달고 이 라벨명을 출력할 수 있는데, 이를 legend라고 한다.
+
+아래는 first와 second 라는 두개의 그래프를 그리고, 우측 상단에 legend를 표현한 예이다.
+
+legend를 사용하기 위해서는 plt.plot에서 label 변수에 그래프의 이름을 정의하고, plt.legend(‘위치')를 정해주면  legend를 그래프상에 표현해주는데, legend의 위치는 아래 표를 참고하면 된다.
+
+
+
+from matplotlib import pyplot as plt
+import numpy as np
+
+x = np.arange(1,10,0.1)
+y = x*0.2
+y2 = np.sin(x)
+
+plt.plot(x,y,'b',label='first')
+plt.plot(x,y2,'r',label='second')
+plt.xlabel('x axis')
+plt.ylabel('y axis')
+plt.title('matplotlib sample')
+plt.legend(loc='upper right')
+plt.show()
+
+
+
+어노테이션
+다음은 어노테이션이라는 기능으로, 그래프에 화살표를 그린후, 그 화살표에 문자열을 출력하는 기능이다. 예를들어 “이값이 최소값" 이런식으로 화살표를 그려서 표현할때 사용하는데 plt.annotate 함수를 사용하면 된다.
+
+plt.annotate(‘문자열',xy,xytext,arrowprops) 식으로 사용한다.
+
+문자열은 어노테이션에서 나타낼 문자열이고, xy는 화살표가 가르키는 점의 위치, xytext는 문자열이 출력될 위치, arrowprops는 화살표의 속성으로 칼라등을 정의한다.
+
+
+
+from matplotlib import pyplot as plt
+import numpy as np
+
+x = np.arange(1,10)
+y = x*5
+
+plt.plot(x,y)
+plt.annotate('annotate',xy=(2,10),xytext=(5,20),arrowprops={'color':'green'})
+plt.show()
+
+서브플롯
+여러개의 그래프를 그리고 싶을때가 있는데, 이 경우 서브플롯이라는 것을 사용한다. 서브플롯은 그래프가 그려질 위치를 격자형으로 지정하는데, plt.subplot(nrow,ncol,pos) 식으로 사용한다.
+
+nrow,ncol은 그래프를 그린 plain의 크기를 지정하는데, 3,2면 3줄로, 가로는 2칸으로 된 그래프 plain 설정한다. 그리고 마자막 pos는 몇번째 plain에 그래프를 그릴지 지정하는데, 아래와 같이 상단에서 부터 우측,아래 방향으로 1,2,3,4,5,6 순서가 된다.
+아래 그림은 2,1 크기의 plain 을 만들어놓고 그래프를 위,아래로 두개를 그리는 예제이다.
+
+
+
+from matplotlib import pyplot as plt
+import numpy as np
+
+x = np.arange(1,10)
+y1 = x*5
+y2 = x*1
+y3 = x*0.3
+y4 = x*0.2
+
+plt.subplot(2,1,1)
+plt.plot(x,y1)
+plt.subplot(2,1,2)
+plt.plot(x,y2)
+plt.show()
+
+아래 그림은 한줄의 두칸 plain을 만들어놓고, 좌우에 두개의 그래프를 그린 예제이다.
+
+
+
+from matplotlib import pyplot as plt
+import numpy as np
+
+x = np.arange(1,10)
+y1 = x*5
+y2 = x*1
+y3 = x*0.3
+y4 = x*0.2
+
+plt.subplot(1,2,1)
+plt.plot(x,y1)
+plt.subplot(1,2,2)
+plt.plot(x,y2)
+plt.show()
+
+다음은 2x2 plain으로 4개의 그래프를 그린 예제이다.
+
+
+
+from matplotlib import pyplot as plt
+import numpy as np
+
+x = np.arange(1,10)
+y1 = x*5
+y2 = x*1
+y3 = x*0.3
+y4 = x*0.2
+
+plt.subplot(2,2,1)
+plt.plot(x,y1)
+plt.subplot(2,2,2)
+plt.plot(x,y2)
+plt.subplot(2,2,3)
+plt.plot(x,y3)
+plt.subplot(2,2,4)
+plt.plot(x,y4)
+plt.show()
+
+
+그래프 사이즈
+그래프를 크게 그리고 싶을때 그래프 자체의 크기를 변경할 수 있는데, plt.figure를 이용하여 figsize=(가로,세로)를 인자로 주면 그래프가 그려질 전체 그림의 크기를 조절할 수 있다. 아래는 20x5 크기로 그래프를 그릴 크기를 지정하는 예제이다.
+
+
+
+import numpy as np
+
+x = np.arange(1,10)
+y1 = x*5
+y2 = x*1
+y3 = x*0.3
+y4 = x*0.2
+
+plt.figure(figsize=(20,5))
+plt.subplot(2,2,1)
+plt.plot(x,y1)
+plt.subplot(2,2,2)
+plt.plot(x,y2)
+plt.subplot(2,2,3)
+plt.plot(x,y3)
+plt.subplot(2,2,4)
+plt.plot(x,y4)
+plt.show()
+
+
+
+
