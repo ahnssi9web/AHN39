@@ -27,7 +27,6 @@
 <button id="onemore"> 한번 더 </button>
 <button id="before"> 이전 것 </button>
 <button id="random"> 맘대로 </button>
-<button id="number"> 번호 입력 -> 확인 --> 다음 것</button></button>
 </p>
 
 <p>	
@@ -64,12 +63,7 @@
      	 document.getElementById('before').addEventListener('click', function(){
             beforevideo();
          }, false);    
-		 
-       // 
-         document.getElementById('number').addEventListener('click', function(){
-            numbervideo();
-         }, false);    
-		 
+				 
       //
       	 document.getElementById('random').addEventListener('click', function(){
             randomvideo();
@@ -239,28 +233,6 @@
          var str2 = document.getElementById("text2");
          str2.innerHTML = ahnno;               
       }
-
-
-      function numbervideo() {	  
-         // Check for last audio file in the playlist
-         if (ahnno > files.length - 2) {
-            ahnno= 0;
-         } else {
-            ahnno++;
-         }
-         _video.src = files[ahnno]; // 다른 미디어로 소스 변경
-         _video.addEventListener('ended', nextvideo, false)
-         
-         var str = document.getElementById("text");
-         str.innerHTML = files[ahnno];
-
-         var str2 = document.getElementById("text2");
-         str2.innerHTML = ahnno;               
-      }
-
-
-
-
 
 
       function randomvideo() {
