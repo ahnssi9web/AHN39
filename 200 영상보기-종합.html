@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title> 200 영상보기-종합 </title>
+    <style>
+    </style>
+</head>
+
+<script language="JavaScript">
+   var ahnno=-1;
+   ahnno = Math.floor(Math.random() * files.length);
+
+</script>
+
+
+<body>
+
+
+	<div id="video_list">
+		<video controls autoplay width="400px" height="400px"  target="idx-contents" ></video>
+	</div>
+	 
+
+	<p>	
+	<span><input   type="number" id="guess1" value=0></span>
+	<input type="button" onclick="Calculate()" value="확인">
+
+	<script>
+	  function Calculate() {
+		 var GuessCon1 = document.getElementById("guess1").value;
+		 ahnno = GuessCon1-1;
+	   }
+	</script>
+	</p>
+                      
+	<p>
+	<button id="next"> 시작(계속 나옴) </button>
+	<button id="onemore"> 한번 더 </button>
+	<button id="before"> 이전 것 </button>
+	<button id="random"> 맘대로 </button>
+	</p>
+
+	<p id="text3"> 파일 번호 -->  파일 이름   </p>   
+
+
+<script>
+	
+         document.getElementById('next').addEventListener('click', function(){
+            nextvideo();
+         }, false);
+      // 
+  
+         document.getElementById('onemore').addEventListener('click', function(){
+            onemorevideo();
+         }, false);
+
+      //
+     	 document.getElementById('before').addEventListener('click', function(){
+            beforevideo();
+         }, false);    
+				 
+      //
+      	 document.getElementById('random').addEventListener('click', function(){
+            randomvideo();
+         }, false);         
+</script>
+
+
+<script>
+         var files = [
+			"https://ahnssi9web.github.io/AHN39/001 멋진 영상/[강추] 가짜 부부의 춤.mp4",
+			"https://ahnssi9web.github.io/AHN39/001 멋진 영상/[강추] 개가 하는 심폐소생술.mp4",
+			"https://ahnssi9web.github.io/AHN39/001 멋진 영상/[강추] 거리 조각상 꿈쩍도 안하네.mp4",
+			"https://ahnssi9web.github.io/AHN39/001 멋진 영상/[강추] 기가 막힌 손동작-병 조작.mp4",
+			"https://ahnssi9web.github.io/AHN39/001 멋진 영상/핵무장하면 에너지 수입못해 저닉료 대폭인상.mp4"
+	 	     ];
+
+         let _video = document.querySelector('#video_list video');
+
+</script>
+
+
+
+
+<script>
+
+      function nextvideo() {
+
+         // Check for last audio file in the playlist
+         if (ahnno > files.length - 2) {
+            ahnno= 0;
+         } else {
+            ahnno++;
+         }
+         _video.src = files[ahnno]; // 다른 미디어로 소스 변경
+         _video.addEventListener('ended', nextvideo, false)
+         
+         var str3 = document.getElementById("text3");
+         str3.innerHTML = ahnno+"/"+files.length+" --> "+files[ahnno];               
+      }
+
+      function onemorevideo() {
+
+         _video.src = files[ahnno]; // 다른 미디어로 소스 변경
+         _video.addEventListener('ended', nextvideo, false)
+                  
+         var str3 = document.getElementById("text3");
+         str3.innerHTML = ahnno+"/"+files.length+" --> "+files[ahnno];               
+      }
+
+      function beforevideo() {
+         // Check for last audio file in the playlist
+         if (ahnno < 1) {
+            ahnno= files.length-1;
+         } else {
+            ahnno--;
+         }
+         _video.src = files[ahnno]; // 다른 미디어로 소스 변경
+         _video.addEventListener('ended', nextvideo, false)
+
+         var str3 = document.getElementById("text3");
+         str3.innerHTML = ahnno+"/"+files.length+" --> "+files[ahnno];               
+      }
+
+
+      function randomvideo() {
+      
+         ahnno = Math.floor(Math.random() * files.length);
+         
+         if (ahnno > files.length - 2) {
+            ahnno= 0;
+         } 
+         
+         _video.src = files[ahnno]; // 다른 미디어로 소스 변경
+         _video.addEventListener('ended', randomvideo, false)
+
+         var str3 = document.getElementById("text3");
+         str3.innerHTML = ahnno+"/"+files.length+" --> "+files[ahnno];               
+                  
+      }
+
+
+</script>
+
+</body>
+</html>
